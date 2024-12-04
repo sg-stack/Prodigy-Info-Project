@@ -1,0 +1,54 @@
+import random
+def get_diffi(difficulty):
+    ranges={"easy":(1,10),"medium":(1,50),"hard":(1,100)}
+    return random.randint(*ranges[difficulty]),ranges[difficulty]
+def choose_diffi():
+    while True:
+        print("\n choose the difficulty level")
+        print("1. for easy(1 to 10)")
+        print("2. for medium(1 to 50)")
+        print("3. for hard(1 to 100)")
+        choice=int(input("enter 1 or 2 or 3").strip())
+        if choice==1:
+            return "easy"
+        elif choice==2:
+            return "medium"
+        elif choice==3:
+            return "hard"
+        else:
+            print("enter a valid choice of difficulty level")
+def user_guess(low,high):
+    while True:
+        try:
+            guess=int(input(f"enter the number between {low} and {high}").strip())
+            if low<=guess<=high:
+                return guess
+            else:
+                print(f"please enter the number between the range {low} and {high}")
+        except ValueError:
+            print("please enter a valid numeric value for guessing game")
+def main():
+    print("Welcome to the random guessing game")
+    r_diffi=choose_diffi()
+    secrenum,(low,high)=get_diffi(r_diffi)
+    attempt=0
+    print(f"I have picked a number between {low} and {high} can you guess it?")
+    while True:
+        h=user_guess(low,high)
+        if h==secrenum:
+            attempt+=1
+            print(f"You have successfully guessed the number in {attempt} attempts")
+            break
+        elif h<secrenum:
+            attempt+=1
+            print(f"The guess is too low! Try Again!")
+        elif h>secrenum:
+            attempt+=1
+            print("The guess is too high! Try Again!")
+    con_pro=input("do yo continue playing the game yes or no").strip()
+    if con_pro!="yes":
+        print("Thank you for playing the guessing game")
+    else:
+        main()
+if __name__=="__main__":
+    main()
